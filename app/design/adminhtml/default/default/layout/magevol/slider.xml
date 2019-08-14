@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<layout>
+    <adminhtml_slider_index>
+        <reference name="content">
+            <block type="magevol_slider/adminhtml_slider" name="magevol_slider"/>
+        </reference>
+    </adminhtml_slider_index>
+    <adminhtml_slider_edit>
+        <reference name="head">
+        	<action method="addCss"><stylesheet>magevol/css/spectrum.css</stylesheet></action>
+        	<action method="addCss"><stylesheet>magevol/css/font-awesome.min.css</stylesheet></action>
+        	<action method="addCss"><stylesheet>magevol/css/style.css</stylesheet></action>
+        	<action method="addItem"><type>skin_js</type><script>magevol/js/jquery.js</script></action>
+        	<action method="addItem"><type>skin_js</type><script>magevol/js/spectrum.js</script></action>
+        </reference>
+    </adminhtml_slider_edit>
+</layout>

@@ -1,0 +1,391 @@
+<?php
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<?php echo $this->getTemplatesHtml() ?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    var firstStepTemplate ='<div class="option-box" id="content_{{id}}">'+
+						    '<table id="<?php echo $this->getFieldId() ?>_{{id}}" class="option-header form-list" cellpadding="0" cellspacing="0">'+
+						    '<input type="hidden" id="<?php echo $this->getFieldId() ?>_{{id}}_is_delete" name="<?php echo $this->getFieldName() ?>[{{id}}][is_delete]" value="" />'+
+						    '<input type="hidden" id="<?php echo $this->getFieldId() ?>_{{id}}_previous_type" name="<?php echo $this->getFieldName() ?>[{{id}}][previous_type]" value="{{type}}" />'+
+						    '<input type="hidden" id="<?php echo $this->getFieldId() ?>_{{id}}_previous_group" name="<?php echo $this->getFieldName() ?>[{{id}}][previous_group]" value="" />'+
+						    '<input type="hidden" id="<?php echo $this->getFieldId() ?>_{{id}}_id" name="<?php echo $this->getFieldName() ?>[{{id}}][id]" value="{{id}}" />'+
+						    '<input type="hidden" id="<?php echo $this->getFieldId() ?>_{{id}}_content_id" name="<?php echo $this->getFieldName() ?>[{{id}}][content_id]" value="{{content_id}}" />'+
+    						'<thead>'+
+    	                		'<tr>'+
+	    	                		'<th style="width: 12%;"><?php echo $this->jsQuoteEscape(Mage::helper('magevol_slider')->__('Type')) ?> <span class="required">*</span></th>'+
+	    	                		'<th style="width: 7%;"><?php echo $this->jsQuoteEscape(Mage::helper('magevol_slider')->__('Sort order')) ?></th>'+
+	    	                		'<th style="width: 12%;"><?php echo $this->jsQuoteEscape(Mage::helper('magevol_slider')->__('Width')) ?></th>'+
+	    	                		'<th style="width: 12%;"><?php echo Mage::helper('magevol_slider')->__('Vertical Position') ?></th>'+
+	    	                		'<th style="width: 12%;"><?php echo Mage::helper('magevol_slider')->__('Horizontal Position') ?></th>'+
+	    	                		'<th style="width: 12%;"><?php echo Mage::helper('magevol_slider')->__('Content Alignment') ?></th>'+
+	    	                		'<th style="width: 9%;"><?php echo $this->jsQuoteEscape($this->jsQuoteEscape($this->getDeleteButtonHtml())) ?></th>'+
+    	                        '</tr>'+
+    	               		'</thead>'+
+            				'<tr class="option-row">' +
+            					'<td><?php echo $this->getTypeSelectHtml() ?></td>' +
+		                    	'<td><input type="text" class="validate-zero-or-greater input-text" name="<?php echo $this->getFieldName() ?>[{{id}}][sort_order]" value="{{sort_order}}"></td>'+
+		                    	'<td>'+
+			                    	'<input type="text" class="input-text" name="<?php echo $this->getFieldName() ?>[{{id}}][width]" value="{{width}}">'+
+			                    	'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Content width in pixels or percentage.') ?></span></p>'+
+		                    	'</td>'+
+		                    	'<td style="padding:0">'+
+			                    	'<table cellspacing="0" class="form-list" style="width: 100%;">'+
+										'<tr>'+
+											'<td>'+
+												'<?php echo $this->getVerticalPositionSelectHtml() ?>'+ 
+											'</td>'+
+										'</tr>'+
+										'<tr style="display: none;">'+
+											'<td>'+
+												'<input type="text" class="input-text" id="slider_content_{{id}}_vertical_position_value" name="<?php echo $this->getFieldName() ?>[{{id}}][vertical_position_value]" value="{{vertical_position_value}}">'+ 
+												'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Value in pixels or percentage') ?></span></p>'+ 
+											'</td>'+
+										'</tr>'+	
+									'</table>'+
+								'</td>'+
+		                    	'<td style="padding:0">'+
+			                    	'<table cellspacing="0" class="form-list" style="width: 100%;">'+
+										'<tr>'+
+											'<td>'+
+												'<?php echo $this->getHorizontalPositionSelectHtml() ?>'+ 
+											'</td>'+
+										'</tr>'+
+										'<tr style="display: none;">'+
+											'<td>'+
+												'<input type="text" class="input-text" id="slider_content_{{id}}_horizontal_position_value" name="<?php echo $this->getFieldName() ?>[{{id}}][horizontal_position_value]" value="{{horizontal_position_value}}">'+ 
+												'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Value in pixels or percentage') ?></span></p>'+ 
+											'</td>'+
+										'</tr>'+	
+									'</table>'+
+								'</td>'+
+								'<td>'+
+								'<?php echo $this->getContentAlignmentSelectHtml() ?>'+ 
+								'</td>'+
+			                    '<td>&nbsp;</td>' +
+                    		'<\/tr></table></div>';
+
+    var contentOption = {
+        div : $('slider_content_container_top'),
+        templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+        templateText : firstStepTemplate,
+        itemCount : 1,
+        add : function(data) {
+            this.template = new Template(this.templateText, this.templateSyntax);
+            
+            if(!data.id){
+                data = {};
+                data.id  = this.itemCount;
+                data.type = '';
+                data.content_id = 0;
+            } else {
+                this.itemCount = data.item_count;
+            }
+
+            Element.insert(this.div, {'after': this.template.evaluate(data)});
+
+          	//set selected type
+            if (data.type) {
+                $A($('<?php echo $this->getFieldId() ?>_'+data.id+'_type').options).each(function(option){
+                    if (option.value==data.type) option.selected = true;
+                });
+            }
+
+            Event.observe('slider_content_'.concat(data.id , '_vertical_position'), 'change', this.showHideCustomAlignement.bind(this));
+            Event.observe('slider_content_'.concat(data.id , '_horizontal_position'), 'change', this.showHideCustomAlignement.bind(this));
+
+            this.itemCount++;
+            this.bindRemoveButtons();
+            contentType.bindSelectInputType();
+
+            colorpicker.init();
+        },
+        remove : function(event) {
+            if (confirm('<?php echo $this->__("Do you really delete this content?");?>')) {
+            	var element = $(Event.findElement(event, 'div'));
+                if(element){
+                    $('slider_'+element.readAttribute('id')+'_'+'is_delete').value = '1';
+                    element.addClassName('no-display');
+                    element.addClassName('ignore-validate');
+                    element.hide();
+                }
+            }
+        },
+        bindRemoveButtons : function() {
+            var buttons = $$('.delete-content');
+            for (var i = 0; i < buttons.length; i++) {
+                if (!$(buttons[i]).binded) {
+                    $(buttons[i]).binded = true;
+                    Event.observe(buttons[i], 'click', this.remove.bind(this));
+                }
+            }
+        },
+        showHideAbsoluteAlignement : function(event) {
+        	var element = $(Event.findElement(event, 'select'));
+        	contenId =  element.id.sub('content_position_absolute_', '');
+        	
+        	if (element.value == 1) {
+            	this.initAbsoluteVerticalHorizontalAlignement(contenId);
+			}
+			else{
+				this.initVerticalHorizontalAlignement(contenId);
+			}
+        },
+        showHideCustomAlignement : function(event) {
+        	var element = $(Event.findElement(event, 'select'));
+        	var tab = ['default', 'left', 'right', 'center'];
+        	if (tab.indexOf(element.value) === -1) {
+				$(element.id.replace('_absolute', '')+'_value').up('tr').show();
+			}
+			else{
+				$(element.id.replace('_absolute', '')+'_value').up('tr').hide();
+			}
+        }
+    }
+
+    var contentType = {
+    	    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+    	    loadStepTwo : function(event){
+    	        var element = $(Event.findElement(event, 'select'));
+
+    	        var group = '';
+    	        var previousGroupElm = $(element.readAttribute('id').sub('_type', '_previous_group'));
+
+    	        switch(element.getValue()){
+	                case 'text':
+	                    template = ContentTemplateText;
+	                    group = 'text';
+	                    break;
+	                case 'button':
+	                    template = ContentTemplateButton;
+	                    group = 'button';
+	                    break;
+	                default:
+	                    template = '';
+	                    group = 'unknown';
+	                    break;
+	            }
+
+    	        if (previousGroupElm.getValue() != group) {
+    	            if ($(element.readAttribute('id')+'_'+previousGroupElm.getValue())) {
+    	                formElm = $(element.readAttribute('id')+'_'+previousGroupElm.getValue()).descendants();
+    	                formElm.each(function(elm){
+    	                    if (elm.tagName == 'input' || elm.tagName == 'select') {
+    	                        elm.name = '__delete__'+elm.readAttribute('name');
+    	                    }
+    	                });
+
+    	                $(element.readAttribute('id')+'_'+previousGroupElm.getValue()).addClassName('no-display');
+    	                $(element.readAttribute('id')+'_'+previousGroupElm.getValue()).addClassName('ignore-validate');
+    	                $(element.readAttribute('id')+'_'+previousGroupElm.getValue()).hide();
+    	            }
+
+    	            previousGroupElm.value = group;
+
+    	            if ($(element.readAttribute('id')+'_'+group)) {
+    	                formElm = $(element.readAttribute('id')+'_'+group).descendants();
+    	                formElm.each(function(elm){
+    	                    if (elm.match('input') || elm.match('select')) {
+    	                        elm.name = elm.readAttribute('name').sub('__delete__', '');
+    	                    }
+    	                });
+    	                $(element.readAttribute('id')+'_'+group).removeClassName('no-display');
+    	                $(element.readAttribute('id')+'_'+group).removeClassName('ignore-validate');
+    	                $(element.readAttribute('id')+'_'+group).show();
+
+    	            } else {
+    	                template = '<div id="'+element.readAttribute('id')+'_'+group+'" class="grid tier form-list">'+template+'</div><div id="'+element.readAttribute('id')+'_'+group+'_advice"></div';
+    	                this.secondTemplate = new Template(template, this.templateSyntax);
+
+    	                data = {};
+    	                if (!data.content_id) {
+    	                    data = {};
+    	                    data.content_id = $(element.readAttribute('id').sub('_type', '_id')).getValue();
+    	                }
+
+    	                Element.insert(element.readAttribute('id').sub('_type', ''), {'after':this.secondTemplate.evaluate(data)});
+
+    	                switch(element.getValue()){
+	    	                case 'text':
+	    	                	textContentType.bindAddButton();
+	    	                    break;
+	    	                case 'button':
+	    	                	buttonContentType.bindAddButton();
+	    	                    break;
+	    	            }
+    	                
+    	                
+    	            }
+    	        }
+
+    	        colorpicker.init();
+
+    	    },
+    	    addDataToValues : function(data){
+
+    	        switch(data.type){
+	                case 'text':
+	                    template = ContentTemplateText;
+	                    group = 'text';
+	                    break;
+	                case 'button':
+	                    template = ContentTemplateButton;
+	                    group = 'button';
+	                    break;
+	            }
+
+    	        $('<?php echo $this->getFieldId() ?>_'+data.id+'_previous_group').value = group;
+
+    	        template = '<div id="<?php echo $this->getFieldId() ?>_{{id}}_type_'+group+'" class="grid tier form-list">'+template+'</div><div id="<?php echo $this->getFieldId() ?>_{{id}}_type_'+group+'_advice"></div>';
+
+    	        this.secondTemplate = new Template(template, this.templateSyntax);
+
+    	        Element.insert($('<?php echo $this->getFieldId() ?>_'+data.content_id), {'after':this.secondTemplate.evaluate(data)});
+
+    	        switch(data.type){
+	                case 'text':
+	                    data.contentValues.each(function(value) {
+	                    	textContentType.add(value);
+	                    });
+	                    textContentType.bindAddButton();
+	                    break;
+	                case 'button':
+	                    data.contentValues.each(function(value) {
+	                    	buttonContentType.add(value);
+	                    });
+	                    buttonContentType.bindAddButton();
+	                    break;
+	            }
+
+    	        if (data.vertical_position) {
+    	        	$A($('<?php echo $this->getFieldId() ?>_'+data.content_id+'_vertical_position').options).each(function(option){
+	    	        	if (option.value==data.vertical_position) option.selected = true;
+	    	      	});
+    	        	this.showHideCustomAlignement('slider_content_'.concat(data.content_id , '_vertical_position'), data.content_id);
+    	        }
+    	        if (data.horizontal_position) {
+    	        	$A($('<?php echo $this->getFieldId() ?>_'+data.content_id+'_horizontal_position').options).each(function(option){
+        	        	if (option.value==data.horizontal_position) option.selected = true;
+        	      	});
+    	        	this.showHideCustomAlignement('slider_content_'.concat(data.content_id , '_horizontal_position'), data.content_id);
+    	        }
+    	        if (data.content_alignment) {
+    	            $A($('<?php echo $this->getFieldId() ?>_'+data.content_id+'_content_alignment').options).each(function(option){
+    	                if (option.value==data.content_alignment) option.selected = true;
+    	            });
+    	        }
+
+    	        colorpicker.init();
+
+        	},
+    	    bindSelectInputType : function(){
+    	        var types = $$('.select_content_type');
+    	        for(var i=0;i<types.length;i++){
+    	            if(!$(types[i]).binded){
+    	                $(types[i]).binded = true;
+    	                Event.observe(types[i], 'change', function(event){
+    	                	contentType.loadStepTwo(event);
+    	                });
+    	            }
+    	        }
+    	    },
+    	    showHideCustomAlignement : function(select) {
+            	var element = $(select);
+            	var tab = ['default', 'left', 'right', 'center'];
+            	if (tab.indexOf(element.value) === -1) {
+            		$(element.id.replace('_absolute', '')+'_value').up('tr').show();
+    			}
+    			else{
+    				$(element.id.replace('_absolute', '')+'_value').up('tr').hide();
+    			}
+            }
+    }
+
+    var colorpicker = {
+    		init : function(){
+        		jQuery(".colorpicker").spectrum({
+	                showInitial: true,
+	                showInput: true,
+	                preferredFormat: "rgb",
+	                allowEmpty: true,
+	                showAlpha: true,
+	                showPalette: true,
+	                palette: [
+			                    ["#D24D57", "#F22613", "#FF0000", "#D91E18", "#96281B", 
+			                    "#EF4836", "#D64541", "#C0392B", "#CF000F", "#E74C3C"],
+			                    ["#DB0A5B", "#FFECDB", "#F64747", "#F1A9A0", "#D2527F",
+			                    "#E08283", "#F62459", "#E26A6A", "#DCC6E0", "#663399"],
+			                    ["#674172", "#AEA8D3", "#913D88", "#9A12B3", "#BF55EC",
+			                    "#BE90D4", "#8E44AD", "#9B59B6", "#E4F1FE", "#4183D7"],
+			                    ["#59ABE3", "#81CFE0", "#52B3D9", "#C5EFF7", "#22A7F0",
+			                    "#3498DB", "#2C3E50", "#19B5FE", "#336E7B", "#22313F"],
+			                    ["#6BB9F0", "#1E8BC3", "#3A539B", "#34495E", "#67809F",
+			                    "#2574A9", "#1F3A93", "#89C4F4", "#4B77BE", "#5C97BF"],
+			                    ["#4ECDC4", "#A2DED0", "#87D37C", "#90C695", "#26A65B",
+			                    "#03C9A9", "#68C3A3", "#65C6BB", "#1BBC9B", "#1BA39C"],
+			                    ["#66CC99", "#36D7B7", "#C8F7C5", "#86E2D5", "#2ECC71",
+			                    "#16a085", "#3FC380", "#019875", "#03A678", "#4DAF7C"],
+			                    ["#27ccc0", "#00B16A", "#1E824C", "#049372", "#26C281",
+			                    "#FDE3A7", "#F89406", "#EB9532", "#E87E04", "#F4B350"],
+			                    ["#F2784B", "#EB974E", "#F5AB35", "#D35400", "#F39C12",
+			                    "#F9690E", "#F9BF3B", "#F27935", "#5b6064", "#ececec"],
+			                    ["#6C7A89", "#D2D7D3", "#EEEEEE", "#BDC3C7", "#ECF0F1",
+			                    "#95A5A6", "#DADFE1", "#ABB7B7", "#f4f4f4", "#BFBFBF"]
+			                ]
+	            });
+        	}
+
+    }
+    
+    if ($('row-template')) {
+        $('row-template').remove();
+    }
+    contentOption.bindRemoveButtons();
+
+    Validation.addAllThese([
+                            ['required-content-type-rows', <?php echo $this->helper('core')->jsonEncode(Mage::helper('magevol_slider')->__('Please add rows to content.')); ?>, function(v, elm) {
+                                    var optionContainerElm = elm.up('div.grid');
+                                    var flag = false;
+                                    selectTypeElements = $$('#'+optionContainerElm.id+' .item-type-row');
+                                    selectTypeElements.each(function(elm){
+                                        if (elm.up('tr').visible()) {
+                                        	flag = true;
+                                        }
+                                    });
+                                    elm.advaiceContainer = optionContainerElm.id+'_advice';
+                                return flag;
+                        }]]);
+
+    if ($('add_new_defined_content')) {
+        Event.observe('add_new_defined_content', 'click', contentOption.add.bind(contentOption));
+    }
+
+  //adding data to templates
+    <?php foreach ($this->getContentValues() as $_value): ?>
+    	contentOption.add(<?php echo $_value->toJson() ?>);
+        contentType.addDataToValues(<?php echo $_value->toJson() ?>);
+    <?php endforeach; ?>
+    //]]>
+</script>

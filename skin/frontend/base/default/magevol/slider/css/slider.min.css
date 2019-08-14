@@ -1,0 +1,24 @@
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ 
+h1{margin-bottom:10px!important}.col-main .owl-theme picture img{min-width:100%}.col-main .owl-theme .owl-pagination{opacity:1;position:absolute;bottom:5%;text-align:center;transition:opacity .2s ease-out 0s;width:100%;z-index:1000}.col-main .owl-theme .owl-controls{margin:0}.col-main .owl-theme .owl-controls .owl-page span{background-color:#fff;border-radius:50%;cursor:pointer;float:left;height:10px;margin-left:10px;margin-right:0;margin-top:0;opacity:.6;position:relative;width:10px}.owl-theme .owl-controls .owl-buttons .owl-prev{left:1%}.owl-theme .owl-controls .owl-buttons .owl-next{right:1%}.owl-theme .owl-controls .owl-buttons div{background-color:transparent!important;position:absolute;top:45%}.owl-theme .banner-caption{position:absolute;left:0;top:0;width:100%;height:100%}.banner-caption .content-block{width:35%;display:block;clear:both}.banner-caption .content-block .button-bloc{display:inline-block;margin:7px 0}.banner-caption .content-block .button-bloc:first-child{margin-right:7px}.banner-caption .btn{border-radius:0;transition:all .2s ease-out 0s;display:block}@media only screen and (max-width:479px){.banner-caption .btn{padding:1px 5px;font-size:12px;line-height:1.5}}.banner-caption .btn.ghost{background:0 0!important;border:1px solid #333;color:#333}

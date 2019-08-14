@@ -1,0 +1,210 @@
+<?php
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+           
+ContentTemplateButton = '<table class="border content-template-table" cellpadding="0" cellspacing="0">'+
+						'<input type="hidden" class="required-content-type-rows" name="validation_{{content_id}}_result" value="" >'+
+						'<thead>'+
+							'<tr class="headings">'+
+							    '<th class="ct-title"><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Text')) ?> <span class="required">*</span></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Color')) ?></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Button options')) ?></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Display Options')) ?></th>'+
+							    '<th class="type-butt last">&nbsp;</th>'+
+							'</tr>'+
+						'</thead>'+
+						'<tbody id="button_content_type_row_{{content_id}}">'+
+						'</tbody>'+
+						'<tfoot>'+
+					        '<tr>'+
+					        	'<td colspan="100" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>'+
+					        '</tr>'+
+				        '</tfoot>'+
+					'</table>';
+					
+ContentButtonRow = 	'<tr id="slider_content_{{id}}_item_{{item_id}}">'+
+						'<td class="item-type-row">'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td  colspan="2" class="value">'+
+										'<input type="hidden" name="slider[content][{{id}}][items][{{item_id}}][content_type_id]" value="{{content_type_id}}">'+
+							            '<input type="hidden" id="slider_content_{{id}}_item_{{item_id}}_is_delete" name="slider[content][{{id}}][items][{{item_id}}][is_delete]" value="">'+
+										'<input type="text" class="required-entry input-text"  name="slider[content][{{id}}][items][{{item_id}}][text]" value="{{text}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Enter text for button.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+							'</table>'+
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text colorpicker" name="slider[content][{{id}}][items][{{item_id}}][text_color]" value="{{text_color}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select font-color') ?></span></p>'+
+									'</td>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text colorpicker" name="slider[content][{{id}}][items][{{item_id}}][text_color_hover]" value="{{text_color_hover}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select font-color on hover') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+								'<tr>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text colorpicker" name="slider[content][{{id}}][items][{{item_id}}][background_color]" value="{{background_color}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select background color.') ?></span></p>'+
+									'</td>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text colorpicker" name="slider[content][{{id}}][items][{{item_id}}][background_color_hover]" value="{{background_color_hover}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select background color on hover.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+							'</table>'+
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Button Type')) ?>'+
+									'</td>'+
+									'<td class="value">'+
+										'<?php echo $this->getButtonTypeSelectHtml() ?>'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select Button Type.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Link')) ?>'+
+									'</td>'+
+									'<td class="value" colspan="2">'+
+										'<input type="text" class="required-entry input-text" name="slider[content][{{id}}][items][{{item_id}}][link]" value="{{link}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Enter link for button.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+
+							'</table>'+
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Sort Order')) ?>'+
+									'</td>'+
+									'<td class="value"><input type="text" class="validate-zero-or-greater input-text" name="slider[content][{{id}}][items][{{item_id}}][sort_order]" value="{{sort_order}}"></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Sort Order')) ?>'+
+									'</td>'+
+									'<td class="value">'+
+										'<?php echo $this->getVisibilitySelectHtml() ?>'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select the visibility for different screen sizes.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+
+							'</table>'+              
+						'</td>'+
+						'<td class="last"><span title="Delete row"><?php echo $this->getDeleteButtonHtml() ?></span></td>'+
+					'</tr>';
+
+buttonContentType = {
+	    div : 'button_content_type_row',
+	    itemCount : 0,
+	    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+	    templateText : ContentButtonRow,
+	    add : function(data) {
+	    	this.template = new Template(this.templateText, this.templateSyntax);
+
+	        if (data.target || data.srcElement) {//data is Event (work in IE and Firefox)
+	            element = $(Event.findElement(data, 'button'));
+	            contenId = element.readAttribute('id').sub('add_item_row_button_', '');
+	            data = {};
+	            data.content_type_id = '-1';
+	            data.item_id = this.itemCount;
+	        } else {
+	            contenId = data.content_id;
+	            data.item_id = data.content_type_id;
+	            this.itemCount = data.item_count;
+	        }
+
+	        data.id  = contenId;
+
+	        Element.insert($(this.div+'_'+data.id), {'bottom':this.template.evaluate(data)});
+
+	        if (data.button_type) {
+	            $A($('slider_content_'+data.id+'_item_'+data.item_id+'_button_type').options).each(function(option){
+	                if (option.value==data.button_type) option.selected = true;
+	            });
+	        }
+	        if (data.visibility) {
+	            $A($('slider_content_'+data.id+'_item_'+data.item_id+'_visibility').options).each(function(option){
+	                if (option.value==data.visibility) option.selected = true;
+	            });
+	        }
+
+	        this.itemCount++;
+	        this.bindRemoveButtons();
+
+	        colorpicker.init();
+	    },
+		remove : function(event){
+		    var element = $(Event.findElement(event, 'tr'));
+		
+		    if(element){
+		        $(element.readAttribute('id')+'_is_delete').value = '1';
+		        element.addClassName('no-display');
+		        element.addClassName('ignore-validate');
+		        element.hide();
+		    }
+		},
+		bindRemoveButtons : function(){
+		    var buttons = $$('.delete-item-row');
+		    for(var i=0;i<buttons.length;i++){
+		        if(!$(buttons[i]).binded){
+		            $(buttons[i]).binded = true;
+		            Event.observe(buttons[i], 'click', this.remove.bind(this));
+		        }
+		    }
+		},
+		bindAddButton : function()
+		{
+		    var buttons = $$('.add-item-row');
+		    for(var i=0;i<buttons.length;i++){
+		        if(!$(buttons[i]).binded){
+		            $(buttons[i]).binded = true;
+		            Event.observe(buttons[i], 'click', this.add.bind(this));
+		        }
+		    }
+		}
+}
+
+if ($('content_panel_type_button')) {
+    $('content_panel_type_button').remove();
+}
+
+buttonContentType.bindRemoveButtons();
+
+if($('add_item_row_button')){
+    Event.observe('add_item_row_button', 'click', buttonContentType.add.bind(buttonContentType));
+}
+//]]>
+</script>

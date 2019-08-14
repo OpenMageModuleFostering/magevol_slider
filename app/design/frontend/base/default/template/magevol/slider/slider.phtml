@@ -1,0 +1,146 @@
+<?php
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+?>
+<?php
+$helper = mage::helper('magevol_slider');
+$slides = $this->getSlides(); 
+?>
+<?php if ($slides && $slides->count()>0): ?>
+<div id="owl-slider" class="owl-carousel owl-theme">
+		<?php foreach ($slides as $slide): ?>
+		<div class="item">
+			<picture>
+			  	<img 
+			  		class="img-responsive"
+				    src="<?php echo  Mage::getBaseUrl('media') . $slide->getSliderImage(); ?>" 
+				    alt="">
+			</picture>
+			
+			<div class="banner-caption" >
+			<?php foreach ($slide->getContents() as $content):?>	
+				<?php 
+					$style = array();
+					$class = array();
+					
+					if($content->getWidth()) $style[] = 'width: '.$content->getWidth();
+					
+					/* Horizontal Alignement */
+					if($content->getHorizontalPosition() == 'left' || $content->getHorizontalPosition() == 'right'){
+						$class[] = 'pull-'.$content->getHorizontalPosition();
+					}elseif($content->getHorizontalPosition() == 'margin'){
+						$style[] = 'margin-left: '.$content->getHorizontalPositionValue();
+					}elseif($content->getHorizontalPosition() == 'center'){
+						$style[] = 'margin: 0 auto';
+					}
+					/* Vertical Alignement */
+					if($content->getVerticalPosition() == 'margin'){
+						$style[] = 'margin-top: '.$content->getVerticalPositionValue();
+					}
+					
+					$class[] = $content->getContentAlignment();
+				?>
+				<div class="content-block <?php echo implode(" ", $class) ?>" style="<?php echo implode("; ", $style) ?>">
+				
+				<?php foreach ($content->getItems() as $item):?>
+					<?php if($content->getType() == 'text'):?>
+						<?php 
+							$style = array();
+							
+							if($item->getFontSize()) 		$style[] = 'font-size: '.$item->getFontSize();
+							if($item->getTextColor()) 		$style[] = 'color: '.$item->getTextColor();
+							if($item->getFontWeight()) 		$style[] = 'font-weight: '.$item->getFontWeight();
+						?>
+						<<?php echo $item->getTextFormat() ?> class="<?php echo $item->getVisibility() ?>" style="<?php echo implode("; ", $style) ?>">
+							<?php echo $item->getText() ?>
+						</<?php echo $item->getTextFormat() ?>>
+					<?php endif; ?>
+					
+					<?php if($content->getType() == 'button'):?>
+					<div class="button-bloc ">
+						<a class="btn <?php echo $item->getVisibility() ?> <?php echo $item->getButtonType() ?>" 
+							data-textcolorhover="<?php echo ($item->getTextColorHover()? $item->getTextColorHover():$item->getTextColor()) ?>" data-textcolor="<?php echo $item->getTextColor()?>" 
+							data-bghover="<?php echo ($item->getBackgroundColorHover())? $item->getBackgroundColorHover():$item->getBackgroundColor() ?>" data-bg="<?php echo $item->getBackgroundColor()?>" 
+							href="<?php echo $item->getLink() ?>" 
+							style="color: <?php echo $item->getTextColor() ?>; <?php echo ($item->getButtonType() == 'ghost')? 'border-color:' : 'background-color:' ?><?php echo $item->getBackgroundColor(); ?>"  ><?php echo $item->getText() ?></a>
+					</div>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				
+				</div>
+			<?php endforeach; ?>
+			</div>
+		</div>
+		<?php endforeach; ?>
+</div>		
+			
+
+<script type="text/javascript">
+//<![CDATA[
+           
+$j( ".btn" ).hover(
+  function() {
+	  $j( this ).attr('style','color:'+ $j(this).data('textcolorhover')+'; background-color:'+ $j(this).data('bghover')+'; border-color:'+ $j(this).data('bghover'));
+  }, function() {
+	  $j( this ).attr('style','color:'+ $j(this).data('textcolor')+'; background-color:'+ $j(this).data('bg')+'; border-color:'+ $j(this).data('bg'));
+  }
+);
+
+$j(document).ready(function() {
+	 
+	$j("#owl-slider").owlCarousel({
+		<?php if ($slides->count() > 1 && $helper->getTransitionStyle()): ?>transitionStyle : '<?php echo $helper->getTransitionStyle();?>', <?php endif;?>
+		navigation : true, // Show next and prev buttons
+		singleItem: true,
+		<?php if ($helper->getAutoPlay()): ?>autoPlay : 8000,<?php endif;?>
+		responsive: true,
+	    responsiveRefreshRate : 200,
+	    responsiveBaseWidth: window,
+		manualAdvance: true, 
+		singleItem:true,
+		itemsDesktop : [1199,1],
+		itemsDesktopSmall : [980,1],
+		itemsTablet: [768,1],
+		itemsMobile : [479,1],
+		navigationText: ["<i class='fa fa-angle-left fa-5x'></i>","<i class='fa fa-angle-right fa-5x'></i>"],
+		slideSpeed : <?php echo $helper->getSlideSpeed();?>,
+		paginationSpeed : <?php echo $helper->getPaginationSpeed();?>,
+		rewindSpeed : <?php echo $helper->getRewindSpeed();?>,
+		addClassActive: true,
+		stopOnHover : <?php echo $helper->getStopOnHover();?>,
+		pagination : true,
+		scrollPerPage:true,
+		afterInit: init,
+		afterMove: init,
+	  });
+	function init() {
+		$j(".owl-item .banner-caption").css('display','none');
+		$j(".owl-item .banner-caption").removeClass('pt-caption')
+		$j(".owl-item.active .banner-caption").css('display','block');
+	}
+	});
+ 
+//]]>
+</script>
+<?php endif; ?>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!-- /** * Magevol Slider * * @category Magevol * @package Magevol_Slider 
+	* @copyright Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com) 
+	* @license http://opensource.org/licenses/osl-3.0.php Open Software License 
+	(OSL 3.0) */ -->
+<config>
+	<menu>
+		<cms>
+			<children>
+				<magevol_slider translate="title" module="magevol_slider">
+					<title><![CDATA[Sliders]]></title>
+					<action>adminhtml/slider</action>
+					<sort_order>50</sort_order>
+				</magevol_slider>
+			</children>
+		</cms>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<magevol_slider translate="title" module="magevol_slider">
+										<title><![CDATA[Magevol - Slider]]></title>
+									</magevol_slider>
+								</children>
+							</config>
+						</children>
+					</system>
+					<cms>
+						<children>
+							<magevol_slider translate="title" module="magevol_slider">
+								<title><![CDATA[Magevol]]></title>
+								<children>
+									<slider translate="title" module="magevol_slider">
+										<title><![CDATA[Sliders]]></title>
+										<sort_order>10</sort_order>
+									</slider>
+								</children>
+							</magevol_slider>
+						</children>
+					</cms>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>

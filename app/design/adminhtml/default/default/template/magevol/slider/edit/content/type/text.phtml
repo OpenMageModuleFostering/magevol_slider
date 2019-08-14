@@ -1,0 +1,194 @@
+<?php
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+           
+ContentTemplateText = '<table class="border content-template-table" cellpadding="0" cellspacing="0">'+
+						'<input type="hidden" class="required-content-type-rows" name="validation_{{content_id}}_result" value="" >'+
+						'<thead>'+
+							'<tr class="headings">'+
+							    '<th class="text-field"><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Text')) ?> <span class="required">*</span></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Color')) ?></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Text Options')) ?></th>'+
+							    '<th class=""><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Display Options')) ?></th>'+
+							    '<th class="type-butt last">&nbsp;</th>'+
+							'</tr>'+
+						'</thead>'+
+						'<tbody id="text_content_type_row_{{content_id}}">'+
+				        '</tbody>'+
+						'<tfoot>'+
+					        '<tr>'+
+					        	'<td colspan="100" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>'+
+					        '</tr>'+
+				        '</tfoot>'+
+						'</table>';
+
+ContentTextRow = '<tr id="slider_content_{{id}}_item_{{item_id}}">'+
+						'<td class="item-type-row">'+
+							'<input type="hidden" name="slider[content][{{id}}][items][{{item_id}}][content_type_id]" value="{{content_type_id}}">'+
+				            '<input type="hidden" id="slider_content_{{id}}_item_{{item_id}}_is_delete" name="slider[content][{{id}}][items][{{item_id}}][is_delete]" value="">'+
+							'<textarea class="required-entry textarea" cols="15" rows="4" style="min-width:95%" name="slider[content][{{id}}][items][{{item_id}}][text]" >{{text}}</textarea>'+  
+							'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Enter text.') ?></span></p>'+	
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text colorpicker" name="slider[content][{{id}}][items][{{item_id}}][text_color]" value="{{text_color}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select font-color') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+							'</table>'+
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="value">'+
+										'<?php echo $this->getTextFormatSelectHtml() ?>'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select text format.') ?></span></p>'+
+									'</td>'+
+									'<td class="value">'+
+										'<input type="text" class="input-text" name="slider[content][{{id}}][items][{{item_id}}][font_size]" value="{{font_size}}">'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Enter font-size.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="value">'+
+										'<?php echo $this->getFontWeightSelectHtml() ?>'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select font-weight.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+	
+							'</table>'+            
+						'</td>'+
+						'<td>'+
+							'<table cellspacing="0" class="form-list">'+
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('Sort Order')) ?>'+
+									'</td>'+
+									'<td class="value"><input type="text" class="validate-zero-or-greater input-text" name="slider[content][{{id}}][items][{{item_id}}][sort_order]" value="{{sort_order}}"></td>'+
+								'</tr>'+
+								'<tr>'+
+									'<td class="label">'+
+										'<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('magevol_slider')->__('visibility')) ?>'+
+									'</td>'+
+									'<td class="value">'+
+										'<?php echo $this->getVisibilitySelectHtml() ?>'+
+										'<p class="note"><span><?php echo Mage::helper('magevol_slider')->__('Select the visibility for different screen sizes.') ?></span></p>'+
+									'</td>'+
+								'</tr>'+
+							'</table>'+              
+						'</td>'+
+						'<td class="last"><span title="Delete row"><?php echo $this->getDeleteButtonHtml() ?></span></td>'+
+					'</tr>';
+
+					
+textContentType = {
+	    div : 'text_content_type_row',
+	    itemCount : 0,
+	    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+	    templateText : ContentTextRow,
+	    add : function(data) {
+	    	this.template = new Template(this.templateText, this.templateSyntax);
+
+	        if (data.target || data.srcElement) {//data is Event (work in IE and Firefox)
+	            element = $(Event.findElement(data, 'button'));
+	            contenId = element.readAttribute('id').sub('add_item_row_button_', '');
+	            data = {};
+	            data.content_type_id = '-1';
+	            data.item_id = this.itemCount;
+	        } else {
+	            contenId = data.content_id;
+	            data.item_id = data.content_type_id;
+	            this.itemCount = data.item_count;
+	        }
+
+	        data.id  = contenId;
+
+	        Element.insert($(this.div+'_'+data.id), {'bottom':this.template.evaluate(data)});
+
+	        if (data.text_format) {
+	            $A($('slider_content_'+data.id+'_item_'+data.item_id+'_text_format').options).each(function(option){
+	                if (option.value==data.text_format) option.selected = true;
+	            });
+	        }
+	        if (data.font_weight) {
+	            $A($('slider_content_'+data.id+'_item_'+data.item_id+'_font_weight').options).each(function(option){
+	                if (option.value==data.font_weight) option.selected = true;
+	            });
+	        }
+	        if (data.visibility) {
+	            $A($('slider_content_'+data.id+'_item_'+data.item_id+'_visibility').options).each(function(option){
+	                if (option.value==data.visibility) option.selected = true;
+	            });
+	        }
+	        
+	        this.itemCount++;
+	        this.bindRemoveButtons();
+
+	        colorpicker.init();
+	    },
+		remove : function(event){
+		    var element = $(Event.findElement(event, 'tr'));
+		
+		    if(element){
+		        $(element.readAttribute('id')+'_is_delete').value = '1';
+		        element.addClassName('no-display');
+		        element.addClassName('ignore-validate');
+		        element.hide();
+		    }
+		},
+		bindRemoveButtons : function(){
+		    var buttons = $$('.delete-item-row');
+		    for(var i=0;i<buttons.length;i++){
+		        if(!$(buttons[i]).binded){
+		            $(buttons[i]).binded = true;
+		            Event.observe(buttons[i], 'click', this.remove.bind(this));
+		        }
+		    }
+		},
+		bindAddButton : function()
+		{
+		    var buttons = $$('.add-item-row');
+		    for(var i=0;i<buttons.length;i++){
+		        if(!$(buttons[i]).binded){
+		            $(buttons[i]).binded = true;
+		            Event.observe(buttons[i], 'click', this.add.bind(this));
+		        }
+		    }
+		}
+}
+
+if ($('content_panel_type_text')) {
+    $('content_panel_type_text').remove();
+}
+
+textContentType.bindRemoveButtons();
+
+if($('add_item_row_button')){
+    Event.observe('add_item_row_button', 'click', textContentType.add.bind(textContentType));
+}
+//]]>
+</script>

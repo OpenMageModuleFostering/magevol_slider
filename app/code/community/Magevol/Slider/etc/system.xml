@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!-- /** * Magevol Slider* * * @category Magevol * @package Magevol_Slider 
+	* @copyright Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com) 
+	* @license http://opensource.org/licenses/osl-3.0.php Open Software License 
+	(OSL 3.0) */ -->
+<config>
+	<tabs>
+		<magevol translate="label" module="magevol_slider">
+			<label>Magevol</label>
+			<sort_order>180</sort_order>
+		</magevol>
+	</tabs>
+	<sections>
+		<magevol_slider translate="label" module="magevol_slider">
+			<label>Slider Setup</label>
+			<tab>magevol</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>60</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<general translate="label" module="magevol_slider">
+					<label>Options</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<load_jquery translate="label">
+                            <label>Load JQuery</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </load_jquery>
+						<transition translate="label">
+							<label>Transition Style</label>
+							<comment><![CDATA[Set the type of animation used for transitioning between slides.]]></comment>
+							<frontend_type>select</frontend_type>
+							<source_model>magevol_slider/system_config_source_transitions</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</transition>
+						<pagination_speed translate="label">
+							<label>Pagination Speed</label>
+							<comment><![CDATA[Pagination speed in milliseconds.]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</pagination_speed>
+						<slide_speed translate="label">
+							<label>Slide Speed</label>
+							<comment><![CDATA[Slide speed in milliseconds.]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</slide_speed>
+						<rewind_speed translate="label">
+							<label>Rewind Speed</label>
+							<comment><![CDATA[Rewind speed in milliseconds.]]></comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>50</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</rewind_speed>
+						<auto_play translate="label">
+							<label>Auto Play</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>60</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</auto_play>
+						<stop_on_hover translate="label">
+							<label>Stop On Hover</label>
+							<comment><![CDATA[Stop autoplay on mouse hover.]]></comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</stop_on_hover>
+					</fields>
+				</general>
+			</groups>
+		</magevol_slider>
+	</sections>
+</config>

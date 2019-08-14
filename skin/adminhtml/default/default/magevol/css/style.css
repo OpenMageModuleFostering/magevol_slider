@@ -1,0 +1,49 @@
+/**
+ * Magevol Slider
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA that is bundled with this package
+ * in the file license.txt.
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento community edition
+ * MageEvol does not guarantee correct work of this extension
+ * on any other Magento edition except Magento community edition.
+ * MageEvol does not provide extension support in case of incorrect edition usage.
+ * =================================================================
+ *
+ * @category    Magevol
+ * @package     Magevol_Slider
+ * @copyright  	Copyright (c) 2016-2017 magevol.com (ttp://www.magevol.com)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ 
+ .custom-options .option-box  .content-template-table{
+	width: 100% !important;
+}
+
+.custom-options .option-header th {
+    width: 150px;
+}
+
+.custom-options .option-header .opt-order {
+	width: 100px;
+}
+
+.content-template-table .ct-title ,
+.content-template-table .text-field {
+   	width: 25% ;
+}
+
+.form-list td.value p.note {
+    width: auto;
+}
+
+.custom-options .option-box .border .padding .input-text {
+	width: 20% !important;
+	margin-right: 5px;
+	}
+	
